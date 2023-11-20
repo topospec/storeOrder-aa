@@ -61,8 +61,8 @@ export default function Home() {
 
   // web3 config
   const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-  const erc20 = new Contract(dummyUSDC, USDC_ABI, provider);
-  const dede = new Contract(dedelivery, DEDE_ABI, provider);
+  const erc20 = new Contract(dummyUSDC as string, USDC_ABI, provider);
+  const dede = new Contract(dedelivery as string, DEDE_ABI, provider);
 
   useEffect(() => {
     const init = async () => {
@@ -195,7 +195,7 @@ export default function Home() {
     addEvent(`Storing order... `);
 
     const client = await Client.init(rpcUrl);
-    const res = await client.sendUserOperation(account.executeBatch(calls), {
+    const res = await client.sendUserOperation(account.executeBatch(calls as any), {
       onBuild: async (op) => {
         addEvent(`Signed UserOperation: `);
         addEvent(JSON.stringify(op, null, 2) as any);
@@ -224,9 +224,12 @@ export default function Home() {
       appId={''}
       onSuccess={() => { }}
       config={{
-        loginMethods: ['email', 'wallet'],
+        embeddedWallets: {
+          createOnLogin: 'users-without-wallets',
+          noPromptOnSignature: true
+        },
         appearance: {
-          theme: 'light',
+          theme: 'dark',
           accentColor: '#676FFF',
           logo: 'https://your-logo-url',
         },

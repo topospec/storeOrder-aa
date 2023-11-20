@@ -1,9 +1,15 @@
-import React from 'react'
-import { usePrivy } from '@privy-io/react-auth';
+import React, { useEffect } from 'react'
+import { usePrivy, useWallets } from '@privy-io/react-auth';
 
 const PrivyLogin = () => {
 
     const { login } = usePrivy();
+
+    const { wallets } = useWallets()
+
+    useEffect(() => {
+        console.log('WALLETS: ', wallets)
+    }, [wallets])
 
     return (
         <div>
